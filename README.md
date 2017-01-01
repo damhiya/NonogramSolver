@@ -1,5 +1,5 @@
 # NonogramSolver
-This is a Nonogram puzzle solver program implemented using scheme
+This is a Nonogram puzzle solver program implemented by scheme
 
 ##Compile
 This project needs Gambit Scheme (or any scheme implementation) to compile
