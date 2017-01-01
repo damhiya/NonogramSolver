@@ -2,7 +2,7 @@
 This is a Nonogram puzzle solver program implemented using scheme
 
 ##Compile
-This project use Gambit Scheme to compile
+This project needs Gambit Scheme (or any scheme implementation) to compile
 > gsc -exe main.scm
 
 ##Running
