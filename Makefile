@@ -1,5 +1,5 @@
 default:
 	gsc-gambit -o NonogramSolver -exe main.scm
 
-clear:
+clean:
 	rm NonogramSolver

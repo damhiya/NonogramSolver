@@ -40,13 +40,13 @@
       (define (display-cell cell)
         (if (= cell false)
           (display "..")
-          (display "##")))
-      (begin
-        (map display-cell line)
-        (newline)))
-    (begin
-      (map display-line solution)
-      (newline)))
+          (if (= cell true)
+            (display "##")
+            (display "**"))))
+      (map display-cell line)
+      (newline))
+    (map display-line solution)
+    (newline))
   (map display-solution solutions))
 
 
