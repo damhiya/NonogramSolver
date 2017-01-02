@@ -1,46 +1,53 @@
 (define (solve-line line-data data)
-  (define (get-all-cases line-length data)
-    (define (get-case-data n k)
-      (define (select-num n)
-        (define (iter n result)
-          (if (zero? n)
-            (append result (list n))
-            (iter (- n 1) (append result (list n)))))
-        (iter n '()))
-      (define (iter n k)
+  (define (get-case-data n k)
+    (define (select-num n)
+      (define (iter n result)
         (if (zero? n)
-          (list '())
-            (apply append
-              (map
-                (lambda (dk)
-                  (map
-                    (lambda (tail) (append (list dk) tail))
-                    (iter (- n 1) (- k dk))))
-                (select-num k)))))
-      (define cases (iter n k))
-      (map
-        (lambda (__case-data)
-          (append (list (car __case-data)) (map (lambda (x) (+ x 1)) (cdr __case-data))))
-          cases))
-    (define (generate-line-data-from-case-data case-data)
-      (define (iter data case-data result)
-        (if (null? data)
-          (append result (repeat-item false (- line-length (length result))))
-          (iter (cdr data) (cdr case-data) (append result (repeat-item false (car case-data)) (repeat-item true (car data))))))
-      (iter data case-data '()))
-    (map generate-line-data-from-case-data (get-case-data (length data) (- line-length (least-length data)))))
+          (append result (list n))
+          (iter (- n 1) (append result (list n)))))
+      (iter n '()))
+    (define (iter n k)
+      (if (zero? n)
+        (list '())
+          (apply append
+            (map
+              (lambda (dk)
+                (map
+                  (lambda (tail) (append (list dk) tail))
+                  (iter (- n 1) (- k dk))))
+              (select-num k)))))
+    (define __cases (iter n k))
+    (map
+      (lambda (__case-data)
+        (append
+          (list (car __case-data))
+          (map (lambda (x) (+ x 1)) (cdr __case-data))))
+        __cases))
+  
+  (define (generate-line-data-from-case-data line-length case-data)
+    (define (iter data case-data result)
+      (if (null? data)
+        (append result (repeat-item false (- line-length (length result))))
+        (iter (cdr data) (cdr case-data) (append result (repeat-item false (car case-data)) (repeat-item true (car data))))))
+    (iter data case-data '())) 
+  
+  (define (get-all-cases line-length data)
+    (map
+      (lambda (case-data) (generate-line-data-from-case-data line-length case-data))
+      (get-case-data (length data) (- line-length (least-length data)))))
+  
+  (define (available? the-case)
+    (define (iter line-data the-case)
+      (if (null? line-data)
+        #t
+        (if (= (car line-data) undefined)
+          (iter (cdr line-data) (cdr the-case))
+          (if (= (car line-data) (car the-case))
+            (iter (cdr line-data) (cdr the-case))
+            #f))))
+    (iter line-data the-case))
   
   (define (collect-available-cases cases)
-    (define (available? the-case)
-      (define (iter line-data the-case)
-        (if (null? line-data)
-          #t
-          (if (= (car line-data) undefined)
-            (iter (cdr line-data) (cdr the-case))
-            (if (= (car line-data) (car the-case))
-              (iter (cdr line-data) (cdr the-case))
-              #f))))
-      (iter line-data the-case))
     (define (iter cases result)
       (if (null? cases)
         (if (null? result)
@@ -50,7 +57,7 @@
           (iter (cdr cases) (append result (list (car cases))))
           (iter (cdr cases) result))))
     (iter cases '()))
-    
+  
   (define (list-and cases)
     (define (items-are-equals? the-list)
       (if (= (length the-list) 1)
