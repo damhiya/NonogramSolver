@@ -9,4 +9,4 @@ Or just type 'make'
 
 ##Running
 I recommands you to prepare input file (input.txt)
-> NonogramSolver <input.txt
+> ./NonogramSolver <input.txt
