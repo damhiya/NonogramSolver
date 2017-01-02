@@ -37,6 +37,16 @@
         (void))))
   (iter board line-data))
 
+(define (list-and list1 list2)
+  (define (iter list1 list2 result)
+    (if (null? list1)
+      result
+      (let ((var (car list1)))
+        (if (= var (car list2))
+          (iter (cdr list1) (cdr list2) (append result (list var)))
+          (iter (cdr list1) (cdr list2) (append result (list undefined)))))))
+  (iter list1 list2 '()))
+
 (define (least-length data) (+ (apply + data) (length data) -1)) ; Test Passed
 
 (define (complete? line-data)

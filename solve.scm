@@ -58,22 +58,13 @@
           (iter (cdr cases) result))))
     (iter cases '()))
   
-  (define (list-and cases)
-    (define (items-are-equals? the-list)
-      (if (= (length the-list) 1)
-        #t
-        (if (= (car the-list) (cadr the-list))
-          (items-are-equals? (cdr the-list))
-          #f)))
-    (define (iter cases result)
-      (if (null? (car cases))
-        result
-        (if (items-are-equals? (map car cases))
-          (iter (map cdr cases) (append result (list (caar cases))))
-          (iter (map cdr cases) (append result (list undefined))))))
-    (iter cases '()))
-  
-  (list-and
+  (
+    (lambda (lists)
+      (define (iter result lists)
+        (if (null? lists)
+          result
+          (iter (list-and result (car lists)) (cdr lists))))
+      (iter (car lists) (cdr lists)))
     (collect-available-cases
       (get-all-cases (length line-data) data))))
 
