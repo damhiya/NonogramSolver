@@ -4,11 +4,6 @@ import Data.Function
 import Data.List
 import Data.Maybe
 
--- import Debug.Trace
-
--- printShow :: Show a => a -> a
--- printShow x = trace (show x) x
-
 data Cell = Fill | Blank | Unknown deriving Eq
 
 type Line  = [Cell]

@@ -2,7 +2,6 @@ import Nonogram
 
 import System.Environment
 import Data.List.Split
-import Debug.Trace
 
 parseFile :: String -> NonogramInput
 parseFile content = NonogramInput rdata cdata
