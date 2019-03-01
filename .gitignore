@@ -1,4 +1,2 @@
-NonogramSolver
-main
-input2.txt
-test*
+input*.txt
+!input1.txt
